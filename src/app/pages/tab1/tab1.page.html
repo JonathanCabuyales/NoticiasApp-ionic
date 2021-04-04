@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-title>
+      Noticias populares
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="light" [fullscreen]="true">
+  
+  <app-noticias-card [noticias]="noticias"></app-noticias-card>
+  <ion-infinite-scroll threshold="25%" position="bottom" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Cargando datos...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

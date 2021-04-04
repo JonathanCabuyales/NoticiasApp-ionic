@@ -1,0 +1,36 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="light">
+    <ion-title>
+      Encabezados
+    </ion-title>
+  </ion-toolbar>
+
+  <ion-segment scrollable mode='md' [value]="categorias[0]" (ionChange)="segmentChanged($event)">
+    <ion-segment-button *ngFor="let categoria of categorias" [value]="categoria">
+      <ion-chip color="primary">
+        <ion-label class="ion-text-capitalize">{{ categoria }}</ion-label>
+      </ion-chip>
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- <ion-list>
+    <ion-item>
+      <ion-label>Codigo pais: </ion-label>
+      <ion-select value="AF" placeholder="Seleccione..." (ionChange)="cambiarPais( $event )">
+        <ion-select-option *ngFor="let code of codeCountry" [value]="code.alpha2Code">{{ code.name }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list> -->
+</ion-header>
+
+<ion-content color="light">
+
+  
+  
+<app-noticias-card [noticias]="noticiasByCategory"></app-noticias-card>
+
+  <ion-infinite-scroll threshold="160px" position="bottom" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Cargando datos...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

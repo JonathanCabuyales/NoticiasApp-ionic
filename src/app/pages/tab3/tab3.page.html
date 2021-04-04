@@ -1,0 +1,22 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="light">
+    <ion-title>
+      Noticias Favoritas
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="light" [fullscreen]="true">
+
+  
+
+  <ion-slides class="ion-padding no-registros" [options]="opt" *ngIf="_dataLocal.noticiasServicio.length === 0">
+    <ion-slide>
+      <h4>No existen registros guardados</h4>
+    </ion-slide>
+  </ion-slides>
+  
+  <app-noticias-card [banderaFav]="true" *ngIf="_dataLocal.noticiasServicio.length > 0" [noticias]="_dataLocal.noticiasServicio"></app-noticias-card>
+
+</ion-content>
+ 
