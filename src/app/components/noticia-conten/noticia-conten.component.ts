@@ -8,7 +8,7 @@ import { Browser, Share } from '@capacitor/core';
 //esto sirve cuando se utiliza un proyecto con cpacitor instalando por cordova
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
-import { ActionSheetController, ToastController } from '@ionic/angular';
+import { ActionSheetController, Platform, ToastController } from '@ionic/angular';
 import { DataLocalService } from 'src/app/services/data-local.service';
 
 
@@ -30,7 +30,8 @@ export class NoticiaContenComponent implements OnInit {
     private _actionSheetCtrl: ActionSheetController,
     private _shared: SocialSharing,
     private _dataLocal: DataLocalService,
-    private _toast: ToastController
+    private _toast: ToastController,
+    private _platform: Platform
   ) { }
 
   ngOnInit() {}
@@ -80,13 +81,7 @@ export class NoticiaContenComponent implements OnInit {
           icon: 'share-outline',
           cssClass: 'action-dark | colorShared',
           handler: () => {
-            console.log("shared");
-            this._shared.share(
-              this.noticia.title,
-              this.noticia.source.name,
-              null,
-              this.noticia.url
-            );
+            this.compartirNoticia();
           }
         },
         cambiarFavorito,
@@ -117,5 +112,30 @@ export class NoticiaContenComponent implements OnInit {
     toast.present();
   }
 
+
+  compartirNoticia(){
+    
+    if(this._platform.is('cordova')){
+      
+      this._shared.share(
+        this.noticia.title,
+        this.noticia.source.name,
+        null,
+        this.noticia.url
+      );
+      
+    }else{
+      if (navigator.share) {
+        navigator.share({
+          title: this.noticia.title,
+          text: this.noticia.description,
+          url: this.noticia.url,
+        })
+          .then(() => console.log('Successful share'))
+          .catch((error) => console.log('Error sharing', error));
+      }
+    }
+
+  }
 
 }
